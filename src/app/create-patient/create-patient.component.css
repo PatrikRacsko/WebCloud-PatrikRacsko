@@ -1,0 +1,5 @@
+button.btn[disabled] {     background: grey; }
+.btn-delete {
+  background-color: #292b2c;
+  color: white;
+}

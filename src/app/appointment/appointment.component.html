@@ -1,0 +1,81 @@
+<div fxLayout="row">
+    <button
+      mat-button
+      mwlCalendarPreviousView
+      [(viewDate)]="viewDate"
+      [view]="view"
+      (viewDateChange)="closeOpenMonthViewDay()"
+    >
+      Previous
+    </button>
+    <button
+      mat-button
+      mwlCalendarToday
+      [(viewDate)]="viewDate"
+    >
+      Today
+    </button>
+    <button
+      mat-button
+      mwlCalendarNextView
+      [view]="view"
+      [(viewDate)]="viewDate"
+      (viewDateChange)="closeOpenMonthViewDay()"
+    >
+      Next
+    </button>
+</div>
+<div fxLayout="row" fxLayoutAlign="center none">
+  <h1>{{ viewDate | date }}</h1>
+</div>
+<div>
+  <mwl-calendar-month-view
+    [events]="events"
+    [viewDate]="viewDate"
+    (dayClicked)="dayClicked($event.day)"
+  >
+  </mwl-calendar-month-view>
+</div>
+
+<ng-template #myTemplate let-data>
+  <mat-dialog-content class="mat-typography">
+    <h1>Appointment selection</h1>
+    <div style="margin-bottom: 10px;">
+      <b>Name</b>: {{ data.name }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <b>Disease</b>: {{ data.disease }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <b>Disease Severity</b>: {{ data.diseaseSeverity }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <b>Assigned hospital ward</b>: {{ data.hospitalWard || 'None' }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <b>Selected appointment Date</b>: {{ data.probablyDate | date }}
+    </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Select start time</mat-label>
+          <input [(ngModel)]="data.appointmentTimeStart" matInput type="time">
+        </mat-form-field>
+      </div>
+      <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Select end time</mat-label>
+        <input [(ngModel)]="data.appointmentTimeEnd"  matInput type="time">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button mat-button
+            *ngIf="data.appointmentTimeStart && data.appointmentTimeEnd"
+            [mat-dialog-close]="null"
+            (click)="bookPatient(data)"
+    >
+      Book
+    </button>
+  </mat-dialog-actions>
+</ng-template>

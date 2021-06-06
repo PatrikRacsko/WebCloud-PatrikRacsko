@@ -1,0 +1,43 @@
+<mat-accordion multi>
+    <mat-expansion-panel style="box-shadow: none; background-color: #fafafa">
+        <mat-expansion-panel-header>
+            Disease severity
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+            <mat-checkbox [(ngModel)]="low">
+                Low
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="medium">
+                Medium
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="high">
+                High
+            </mat-checkbox>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel style="box-shadow: none; background-color: #fafafa">
+        <mat-expansion-panel-header>
+            Hospital Departments
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+            <mat-checkbox [(ngModel)]="surgical">
+                Surgical
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="trauma">
+                Trauma
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="pediatric">
+                Pediatric
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="longTerm">
+                Long-term sick
+            </mat-checkbox>
+        </div>
+    </mat-expansion-panel>
+
+</mat-accordion>
+<div fxLayout="row" fxLayoutAlign="center center" style="margin-top: 20px">
+  <button mat-button style="background-color: #292b2c; color: white;" (click)="handleFilter()">
+    Filter
+  </button>
+</div>

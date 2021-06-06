@@ -1,0 +1,61 @@
+<div style="text-align: center">
+  <h1>Bed reservations</h1>
+</div>
+<div fxLayout="row" fxFlexFill>
+  <div fxFlex="70">
+    <mat-accordion multi>
+      <mat-expansion-panel [expanded]="true" [disabled]="true" *ngFor="let ward of (wards$ | async)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h2 style="color: black">{{ ward.ward }}</h2>
+          </mat-panel-title>
+          <mat-panel-description>
+            Capacity: {{ ward.actualCapacity +'/'+ ward.maxCapacity }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="showInfo(ward.id)">Show info</button>
+          <button
+            mat-button
+            color="warn"
+            [disabled]="ward.patientIds.includes(selectedPatient?.id || '') || ward.actualCapacity >= ward.maxCapacity"
+            (click)="bookPatient(selectedPatient || null, ward)"
+          >
+            Book patient
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div fxFlex="1" fxFill>
+    <mat-divider class="mat-divider" vertical style="height:100%"></mat-divider>
+  </div>
+  <div fxFlex="29" fxFill>
+    <div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="!isResourceSelected; else selected">
+      <mat-icon style="color: #c5c5c5;">mouse</mat-icon>
+      <div style="color: #c5c5c5;">Select a ward</div>
+    </div>
+    <ng-template #selected>
+      <div style="text-align: center">
+        <h2>Selected patient</h2>
+        <div style="margin-bottom: 10px;">
+          <b>Name</b>: {{ selectedPatient?.name }}
+        </div>
+        <div style="margin-bottom: 10px;">
+          <b>Disease</b>: {{ selectedPatient?.disease }}
+        </div>
+        <div style="margin-bottom: 10px;">
+          <b>Disease Severity</b>: {{ selectedPatient?.diseaseSeverity }}
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div style="text-align: center">
+        <h3>List of accommodated patients in {{ selectedWard }}</h3>
+        <ng-container *ngFor="let patient of (accommodatedPatients)">
+          <b>{{ patient.name }}</b>
+          <br/>
+        </ng-container>
+      </div>
+    </ng-template>
+  </div>
+</div>

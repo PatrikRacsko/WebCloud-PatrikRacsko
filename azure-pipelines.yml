@@ -1,0 +1,38 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+
+- task: Npm@1
+  displayName: "npm build"
+  inputs:
+    command: 'custom'
+    customCommand: 'run build-prod'
+- task: CmdLine@2
+  displayName: 'Run unit tests'
+  inputs:
+    script: './node_modules/.bin/ng test --watch=false --reporters=junit,progress --browsers=ChromeHeadless'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-*.xml'
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: './dist'
+    artifact: 'SPA-DROP'
+    publishLocation: 'pipeline'

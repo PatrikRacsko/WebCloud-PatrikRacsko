@@ -1,0 +1,32 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <mat-card style="max-width: 650px;">
+    <mat-card-header>
+      <mat-card-title>Patient information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Patient boarding form
+      </p>
+      <ng-container>
+        <mat-form-field>
+          <input matInput placeholder="Name" [(ngModel)]="data.name">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 15px">
+          <input matInput placeholder="Disease" [(ngModel)]="data.disease">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 15px">
+          <mat-select placeholder="Disease severity" [(ngModel)]="data.diseaseSeverity">
+            <mat-option *ngFor="let condition of ['Low', 'Medium', 'High']"
+                        [value]="condition">
+              {{condition}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button [routerLink]="['/lobby']" color="warn">Cancel</button>
+      <button mat-raised-button (click)="save()" class="btn-delete" [disabled]="handleDisable()">Save</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

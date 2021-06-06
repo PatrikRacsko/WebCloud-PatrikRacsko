@@ -1,0 +1,27 @@
+<div>
+  <button
+    mat-button
+    style="background-color: #292b2c; color: white"
+    [routerLink]="['/create-patient']"
+  >
+    <mat-icon style="color: white">add</mat-icon>
+    Add patient
+  </button>
+  <mat-divider class="mat-divider" style="height:100%; margin-top: 15px; margin-bottom: 15px"></mat-divider>
+</div>
+<div fxLayout="column">
+    <mat-card style="margin-bottom: 10px; cursor: pointer" *ngFor="let patient of (patients$ | async)" (click)="showPatient(patient.id)">
+        <mat-card-content>
+            <div fxLayout="row">
+                <div fxFlex="30">
+                    {{ patient.name }}
+                </div>
+                <div fxFlex="70" fxLayoutAlign="end">
+                   <mat-chip-list>
+                       <mat-chip [selectable]="false" [ngStyle]="{'background-color': handleChipColor(patient.diseaseSeverity)}">{{ patient.diseaseSeverity }}</mat-chip>
+                   </mat-chip-list>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

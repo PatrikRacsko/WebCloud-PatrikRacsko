@@ -1,0 +1,20 @@
+trigger:
+- dev
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Npm@1
+  inputs:
+    command: 'install'
+
+- task: CmdLine@2
+  displayName: 'Run unit tests'
+  inputs:
+    script: './node_modules/.bin/ng test --watch=false --reporters=junit,progress --browsers=ChromeHeadless'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-*.xml'

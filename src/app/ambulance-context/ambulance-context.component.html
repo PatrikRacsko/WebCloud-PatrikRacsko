@@ -1,0 +1,56 @@
+<div fxLayout="column" fxFlexFill fxLayoutAlign="center center" *ngIf="!isResourceSelected; else selected">
+    <mat-icon style="color: #c5c5c5;">mouse</mat-icon>
+    <div style="color: #c5c5c5;">Select a patient</div>
+</div>
+<ng-template #selected>
+    <div fxLayout="column" fxFlexFill>
+        <div fxLayout="row" fxLayoutAlign="space-between none">
+            <button mat-button class="button-alignment" [routerLink]="['/reservation']">
+                <mat-icon>book_online</mat-icon>
+                <br>
+                <span>Reserve bed</span>
+            </button>
+            <button mat-button class="button-alignment" [routerLink]="['/appointment']">
+                <mat-icon>calendar_today</mat-icon>
+                <br>
+                <span>Book appointment</span>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-icon
+         style="margin-left: auto; margin-right: auto; font-size: 400%"
+         >
+         perm_identity
+        </mat-icon>
+        <div style="margin-left: 15px; margin-top:50px;">
+            <div style="margin-bottom: 10px;">
+                <b>Name</b>: {{ selectedPatient?.name }}
+            </div>
+            <div style="margin-bottom: 10px;">
+                <b>Disease</b>: {{ selectedPatient?.disease }}
+            </div>
+            <div style="margin-bottom: 10px;">
+                <b>Disease Severity</b>: {{ selectedPatient?.diseaseSeverity }}
+            </div>
+            <div style="margin-bottom: 10px;">
+                <b>Assigned hospital ward</b>: {{ mapHospitalWards(selectedPatient?.hospitalWard || null) }}
+            </div>
+          <mat-divider></mat-divider>
+          <div style="margin-bottom: 10px;margin-top: 10px">
+              <b>Appointment Date</b>: {{ (selectedPatient?.appointmentDate | date) || 'None' }}
+            </div>
+            <div style="margin-bottom: 10px;">
+              <b>Appointment starting at</b>: {{ selectedPatient?.appointmentTimeStart || 'None'  }}
+            </div>
+            <div style="margin-bottom: 10px;">
+              <b>Appointment ending at</b>: {{ selectedPatient?.appointmentTimeEnd || 'None' }}
+            </div>
+        </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="row" fxLayoutAlign="center" style="margin-top: 10px">
+        <button mat-raised-button color="warn" (click)="deletePatient()">
+          Delete patient
+        </button>
+      </div>
+    </div>
+</ng-template>
